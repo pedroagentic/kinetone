@@ -1,0 +1,9 @@
+{
+  "name": "kinetone",
+  "private": true,
+  "type": "module",
+  "description": "A Patatap-inspired visual sound kit",
+  "scripts": {
+    "start": "python3 -m http.server 4173"
+  }
+}

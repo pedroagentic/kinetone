@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Kinetone — a visual sound kit</title>
+    <meta
+      name="description"
+      content="Kinetone is a Patatap-inspired portable animation and sound kit. Press A–Z and 0–9 to play 36 sounds and effects across eight kits. Warning: contains flashing images."
+    />
+    <link rel="icon" href="assets/favicon.png" type="image/png" />
+    <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
+    <meta name="theme-color" content="#1a0e0c" />
+    <script>
+      (() => {
+        const month = new Date().getMonth();
+        const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || "";
+        const south =
+          /Australia\/|Pacific\/Auckland|America\/Sao_Paulo|America\/Argentina|America\/Santiago|Africa\/Johannesburg|America\/Montevideo/.test(
+            tz
+          );
+        let id = month === 11 || month <= 1 ? "winter" : month <= 4 ? "spring" : month <= 7 ? "summer" : "autumn";
+        if (south) id = { spring: "autumn", summer: "winter", autumn: "spring", winter: "summer" }[id];
+        const bgs = { spring: "#eef4e8", summer: "#f3e4cf", autumn: "#1a0e0c", winter: "#d5e4f0" };
+        const fgs = { spring: "#1a2a18", summer: "#2a1810", autumn: "#f4e6d4", winter: "#14324a" };
+        document.documentElement.style.setProperty("--bg", bgs[id]);
+        document.documentElement.style.setProperty("--fg", fgs[id]);
+        document.querySelector('meta[name="theme-color"]')?.setAttribute("content", bgs[id]);
+      })();
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Outfit:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/app.css" />
+  </head>
+  <body>
+    <canvas id="stage"></canvas>
+    <div id="touch" aria-hidden="true"></div>
+
+    <div id="hint">
+      <div class="hint-inner">
+        <img class="logo-mark" src="assets/icon.jpg" alt="" />
+        <h1>Kinetone</h1>
+        <p class="tag" id="season-tag">A portable animation and sound kit</p>
+        <p class="hint-keys">Press A–Z or 0–9 · space changes the kit · turn up speakers</p>
+      </div>
+    </div>
+
+    <div id="kit-badge" aria-live="polite">
+      <div class="kit-name">Midnight</div>
+      <div class="kit-hint">IDM · A minor</div>
+    </div>
+
+    <div id="set-timer" aria-label="Time until the next generated set">5:00</div>
+    <div id="status"></div>
+    <button id="help-btn" type="button" aria-label="Help" aria-expanded="false">?</button>
+
+    <div id="help">
+      <div class="help-card">
+        <h2>Kinetone</h2>
+        <p>
+          A generative variation of Patatap. Eight palettes, visuals, and tunings are rolled
+          in the colors of the current season and held for five minutes, then a new set
+          takes over.
+        </p>
+        <p id="season-note" class="season-note"></p>
+        <dl>
+          <dt>A–Z · 0–9</dt>
+          <dd>Play a sound and its animation</dd>
+          <dt>Space</dt>
+          <dd>Next kit · Shift+Space previous</dd>
+          <dt>Enter</dt>
+          <dd>Auto-jam</dd>
+          <dt>`</dt>
+          <dd>Record a loop, press again to play it</dd>
+          <dt>Shift+F</dt>
+          <dd>Fullscreen</dd>
+          <dt>Esc</dt>
+          <dd>Stop jam / loop</dd>
+        </dl>
+        <p class="warn">Contains flashing images. Inspired by Patatap by jonobr1 + Lullatone.</p>
+      </div>
+    </div>
+
+    <p class="credits">Kinetone · after <a href="https://patatap.com" target="_blank" rel="noreferrer">Patatap</a></p>
+
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>
