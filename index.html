@@ -6,7 +6,7 @@
     <title>Kinetone — a visual sound kit</title>
     <meta
       name="description"
-      content="Kinetone is a Patatap-inspired portable animation and sound kit. Press A–Z and 0–9 to play 36 sounds and effects across eight kits. Warning: contains flashing images."
+      content="Kinetone is a Patatap-inspired portable animation and sound kit. Press A–Z and 0–9, tap the grid, or play MIDI notes to fire 36 sounds and effects across eight kits. Warning: contains flashing images."
     />
     <link rel="icon" href="assets/favicon.png" type="image/png" />
     <link rel="apple-touch-icon" href="assets/apple-touch-icon.png" />
@@ -45,7 +45,7 @@
         <img class="logo-mark" src="assets/icon.jpg" alt="" />
         <h1>Kinetone</h1>
         <p class="tag" id="season-tag">A portable animation and sound kit</p>
-        <p class="hint-keys">Press A–Z or 0–9 · space changes the kit · turn up speakers</p>
+        <p class="hint-keys">Press A–Z or 0–9 · MIDI · space changes the kit · turn up speakers</p>
       </div>
     </div>
 
@@ -55,6 +55,7 @@
     </div>
 
     <div id="set-timer" aria-label="Time until the next generated set">5:00</div>
+    <div id="midi-flag" hidden></div>
     <div id="status"></div>
     <button id="help-btn" type="button" aria-label="Help" aria-expanded="false">?</button>
 
@@ -70,6 +71,8 @@
         <dl>
           <dt>A–Z · 0–9</dt>
           <dd>Play a sound and its animation</dd>
+          <dt>MIDI</dt>
+          <dd>Notes play the same 36 hits (C1 = Q, wrapping every 3 octaves)</dd>
           <dt>Space</dt>
           <dd>Next kit · Shift+Space previous</dd>
           <dt>Enter</dt>

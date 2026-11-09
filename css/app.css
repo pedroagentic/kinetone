@@ -145,6 +145,23 @@ h1 {
   font-variant-numeric: tabular-nums;
 }
 
+#midi-flag {
+  position: absolute;
+  top: 44px;
+  left: 24px;
+  z-index: 5;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.45;
+  pointer-events: none;
+  max-width: min(42vw, 280px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 #status {
   position: absolute;
   top: 24px;
@@ -248,7 +265,7 @@ h1 {
 
 .help-card dl {
   display: grid;
-  grid-template-columns: 110px 1fr;
+  grid-template-columns: 118px 1fr;
   gap: 8px 16px;
   margin: 0;
   font-size: 14px;
