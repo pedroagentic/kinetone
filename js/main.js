@@ -2,7 +2,6 @@ import { AudioEngine } from "./audio.js";
 import { VisualEngine } from "./engine.js";
 import { Sequencer } from "./seq.js";
 import { TOUCH_ROWS } from "./kits.js";
-import { enableMidi, noteToKey } from "./midi.js";
 import {
   DEFAULT_LOCK_MS,
   generateSession,
@@ -34,7 +33,6 @@ const setTimer = document.getElementById("set-timer");
 const help = document.getElementById("help");
 const helpBtn = document.getElementById("help-btn");
 const touchLayer = document.getElementById("touch");
-const midiFlag = document.getElementById("midi-flag");
 
 const audio = new AudioEngine();
 const vis = new VisualEngine(canvas, KITS[0].bg);
@@ -135,8 +133,6 @@ function publish() {
     KEY_MAP,
     lock,
     LOCK_MS,
-    noteToKey,
-    midiNote,
   };
 }
 
@@ -289,37 +285,6 @@ function triggerPointer(key, x, y) {
   trigger(key, { x, y });
 }
 
-function midiNote(note, velocity = 0.85) {
-  const key = noteToKey(note);
-  if (!key) return;
-  const vel = Math.max(0, Math.min(1, Number(velocity) || 0));
-  if (vel <= 0) return;
-  arm();
-  trigger(key, {
-    x: ((note + 0.5) / 128) * vis.w,
-    y: vis.h * (0.18 + (1 - vel) * 0.64),
-  });
-}
-
-function updateMidiUi(info) {
-  if (!midiFlag) return;
-  const names = info?.inputs || [];
-  if (!names.length) {
-    midiFlag.hidden = true;
-    midiFlag.textContent = "";
-    return;
-  }
-  midiFlag.hidden = false;
-  midiFlag.textContent = names.length === 1 ? `MIDI · ${names[0]}` : `MIDI · ${names.length} devices`;
-}
-
-function startMidi() {
-  enableMidi({
-    onNote: (_key, meta) => midiNote(meta.note, meta.velocity),
-    onDevices: updateMidiUi,
-  }).catch(() => {});
-}
-
 window.addEventListener("pointerdown", (e) => {
   if (e.target.closest("#help") || e.target.closest("#help-btn") || e.target.closest("a")) return;
   arm();
@@ -353,7 +318,6 @@ if (navigator.maxTouchPoints > 0) document.body.classList.add("touch");
 updateSeasonCopy();
 applyKit(0, { silent: true, wipe: false });
 updateTimer();
-startMidi();
 setInterval(tickLock, 250);
 document.addEventListener("visibilitychange", () => {
   if (document.visibilityState === "visible") tickLock();
